@@ -1,5 +1,4 @@
 import { Star, Car, BookOpen, Music, Ship, Heart, Camera, Banknote } from "lucide-react";
-import Link from "next/link";
 
 const services = [
   {
@@ -60,7 +59,7 @@ export default function ServicesLanding() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
           {services.map((s, i) => (
             <div
               key={i}
@@ -75,15 +74,6 @@ export default function ServicesLanding() {
           ))}
         </div>
 
-        {/* Link */}
-        <div className="text-center mt-8">
-          <Link
-            href="/services"
-            className="text-sm font-semibold text-orange-500 hover:text-orange-600 transition"
-          >
-            View all services →
-          </Link>
-        </div>
       </div>
     </section>
   );
