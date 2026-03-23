@@ -71,7 +71,7 @@ export default function NormalNavbar() {
 
             {/* DESKTOP LINKS */}
             <div className="hidden lg:flex items-center space-x-16 ml-30 font-bold text-gray-700">
-              {[{name : "Home", url : '/'}, {name :"Packages", url : '/tour-packages'}, {name : "Temples", url : '/mathura-vrindavan-temples'}, {name : "Temple Timing", url : '/mathura-vrindavan-temple-timings'}, {name : "Services", url : '/services'} , {name :"About Us", url : "/about"}].map((item, idx)=>{
+              {[{name : "Home", url : '/'}, {name :"Packages", url : '/tour-packages'}, {name : "2 Days Tour", url : '/2-days-mathura-vrindavan-tour'}, {name : "Temples", url : '/mathura-vrindavan-temples'}, {name : "Temple Timing", url : '/mathura-vrindavan-temple-timings'}, {name : "Services", url : '/services'} , {name :"About Us", url : "/about"}].map((item, idx)=>{
                  if(item.name=='Packages'){
                    return  <span key={idx}><PackageDropDown from={"normal"} /></span>;
                  }
@@ -122,6 +122,7 @@ export default function NormalNavbar() {
             <div className="flex flex-col gap-4 font-semibold text-gray-700">
               <Link href="/" onClick={() => setMobileOpen(false)}>Home</Link>
               <Link href="/tour-packages" onClick={() => setMobileOpen(false)}>Packages</Link>
+              <Link href="/2-days-mathura-vrindavan-tour" onClick={() => setMobileOpen(false)}>2 Days Tour</Link>
               <Link href="/mathura-vrindavan-temples" onClick={()=>setMobileOpen(false)}>Temples</Link>
               <Link href="/services" onClick={()=>setMobileOpen(false)} >Services</Link>
               <Link href="/about" onClick={() => setMobileOpen(false)}>About Us</Link>
