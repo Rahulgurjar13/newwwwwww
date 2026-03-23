@@ -1,117 +1,201 @@
 "use client";
-import { MapPin, Clock, ChevronDown, Star, Shield, Users, Landmark, Headphones } from "lucide-react";
+import { MapPin, Clock, Star, Shield, Users, Phone, Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
-import EnquiryPopup from "@/utils/EnquiryForm";
+import Link from "next/link";
 
 export default function MathuraHero() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", phone: "", date: "", persons: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Hero Form:", form);
+    setSubmitted(true);
+  };
 
   return (
     <>
-      <EnquiryPopup open={isOpen} onClose={() => setIsOpen(false)} />
-
-      {/* Urgency Strip */}
-      <div className="bg-red-600 text-white text-center py-2 px-4">
-        <p className="text-xs sm:text-sm font-semibold tracking-wide">
+      {/* Urgency Strip — orange themed */}
+      <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-amber-600 text-white text-center py-2.5 px-4">
+        <p className="text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-yellow-300 animate-pulse" />
           Limited Seats Left — Special Offer: Extra 10% Off This Week
         </p>
       </div>
 
       <section className="relative w-full overflow-hidden">
-        {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#b3500a] via-[#cf7602] to-[#c45800]" />
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a00] via-[#3d1a00] to-[#5c2a00]" />
 
-        {/* Decorative */}
-        <div className="absolute top-20 right-0 w-72 h-72 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-20 left-0 w-56 h-56 rounded-full bg-yellow-400/10 blur-3xl pointer-events-none" />
+        {/* Decorative glows */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-orange-600/20 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-orange-500/15 blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 right-0 w-64 h-64 rounded-full bg-amber-500/10 blur-[80px] pointer-events-none" />
 
-        {/* Content */}
-        <div className="relative z-10 mx-auto w-full max-w-4xl px-5 sm:px-8 pt-16 md:pt-24 pb-16 md:pb-20 flex flex-col items-center text-center">
+        {/* Content — split layout */}
+        <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 py-14 md:py-20 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
 
-          {/* Trust pill */}
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 border border-white/20 backdrop-blur-sm px-4 py-1.5 text-xs font-medium text-orange-100 mb-8">
-            <Star size={13} className="text-yellow-300 fill-yellow-300" />
-            4.9/5 Rated · Trusted by 10,000+ Pilgrims
-          </span>
+          {/* ─── LEFT — Content ─── */}
+          <div className="flex-1 text-center lg:text-left">
 
-          {/* Main Heading */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-white">
-            Mathura Vrindavan Agra
-          </h1>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent mt-1">
-            Tour Packages
-          </h1>
+            {/* Trust badge */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-orange-500/15 border border-orange-400/25 px-4 py-2 mb-6">
+              <Star size={14} className="text-yellow-400 fill-yellow-400" />
+              <span className="text-xs sm:text-sm font-medium text-orange-200">4.9/5 Rated · 10,000+ Happy Pilgrims</span>
+            </div>
 
-          {/* Subtitle */}
-          <p className="mt-5 text-sm sm:text-base text-orange-100/90 max-w-lg leading-relaxed">
-            Customised spiritual tour packages from 1 to 10 days covering Mathura, Vrindavan, Gokul, Agra, Govardhan and Barsana.
-          </p>
+            {/* Heading */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-tight text-white">
+              Mathura Vrindavan Agra
+            </h1>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-tight text-orange-400 mt-1">
+              Tour Packages
+            </h2>
 
-          {/* Info pills */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 border border-white/15 px-4 py-1.5 text-xs sm:text-sm font-medium text-white">
-              <Clock size={14} className="text-orange-200" />
-              1 Day to 10 Days
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 border border-white/15 px-4 py-1.5 text-xs sm:text-sm font-medium text-white">
-              <MapPin size={14} className="text-orange-200" />
-              Mathura · Vrindavan · Gokul · Agra
-            </span>
-          </div>
+            {/* Subtitle */}
+            <p className="mt-5 text-sm sm:text-base text-gray-300 max-w-lg leading-relaxed mx-auto lg:mx-0">
+              Customised spiritual tour packages from 1 to 10 days covering Mathura, Vrindavan, Gokul, Agra, Govardhan and Barsana.
+            </p>
 
-          {/* Price */}
-          <div className="mt-8">
-            <span className="inline-block rounded-full bg-yellow-400 px-7 py-3 text-lg sm:text-xl font-extrabold text-gray-900 shadow-lg">
-              Starting ₹2,299 /person
-            </span>
-          </div>
+            {/* Info pills */}
+            <div className="mt-6 flex flex-wrap justify-center lg:justify-start gap-2.5">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/10 px-4 py-2 text-xs sm:text-sm font-medium text-gray-200">
+                <Clock size={14} className="text-orange-400" />
+                1 to 10 Days
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/10 px-4 py-2 text-xs sm:text-sm font-medium text-gray-200">
+                <MapPin size={14} className="text-orange-400" />
+                Mathura · Vrindavan · Agra
+              </span>
+            </div>
 
-          {/* CTA Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            <button
-              onClick={() => setIsOpen(true)}
-              className="cursor-pointer px-8 py-3.5 rounded-full bg-white text-orange-600 font-bold text-base shadow-lg hover:shadow-xl hover:scale-105 transition duration-300 pulse-orange"
-            >
-              Get Free Consultation
-            </button>
-            <a
-              href="#enquiry"
-              className="cursor-pointer px-8 py-3.5 rounded-full border-2 border-white/80 text-white font-semibold text-base hover:bg-white/10 transition duration-300 text-center flex items-center justify-center gap-2"
-            >
-              Fill Enquiry Form
-              <ChevronDown size={16} />
-            </a>
-          </div>
-
-          {/* Trust line */}
-          <div className="mt-5 flex items-center gap-4 text-xs text-orange-200/80">
-            <span className="flex items-center gap-1"><Shield size={12} /> Free Cancellation</span>
-            <span className="text-orange-300/40">·</span>
-            <span className="flex items-center gap-1"><Users size={12} /> 24/7 Support</span>
-          </div>
-
-          {/* Stats — frosted glass cards matching the site style */}
-          <div className="mt-12 w-full grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
-              { icon: Landmark, value: "500+", label: "Sacred Temples" },
-              { icon: Users, value: "10,000+", label: "Happy Pilgrims" },
-              { icon: Star, value: "4.9★", label: "Average Rating" },
-              { icon: Headphones, value: "24/7", label: "Travel Support" },
-            ].map((stat, i) => (
-              <div
-                key={i}
-                className="rounded-xl bg-gradient-to-br from-orange-500/60 to-orange-400/40 backdrop-blur border border-white/15 p-4 sm:p-5 text-center hover:scale-105 transition duration-300"
+            {/* Price + CTA row */}
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+              <span className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-lg font-extrabold text-white shadow-lg shadow-orange-500/30">
+                Starting ₹1,499/person
+              </span>
+              <Link
+                href="tel:+917300620809"
+                className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20 transition duration-300"
               >
-                <stat.icon size={20} className="mx-auto text-yellow-200 mb-2" />
-                <div className="text-xl sm:text-2xl font-extrabold text-white leading-tight">{stat.value}</div>
-                <div className="text-xs text-orange-100/80 mt-0.5">{stat.label}</div>
+                <Phone size={15} className="text-green-400" />
+                Call Now
+              </Link>
+            </div>
+
+            {/* Trust micro */}
+            <div className="mt-5 flex flex-wrap items-center gap-5 text-xs text-gray-400 justify-center lg:justify-start">
+              <span className="flex items-center gap-1.5">
+                <Shield size={13} className="text-orange-400" />
+                Free Cancellation
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Users size={13} className="text-orange-400" />
+                24/7 Support
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Star size={13} className="text-orange-400" />
+                VIP Darshan Included
+              </span>
+            </div>
+          </div>
+
+          {/* ─── RIGHT — Lead Form Card ─── */}
+          <div className="w-full lg:w-[420px] shrink-0">
+            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/40">
+
+              {/* Form header */}
+              <div className="bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-5 text-center">
+                <h3 className="text-lg sm:text-xl font-bold text-white">Get Your Free Tour Quote</h3>
+                <p className="text-orange-100 text-xs mt-1">We respond within 30 minutes</p>
               </div>
-            ))}
+
+              {/* Form body */}
+              <div className="bg-white p-6">
+                {submitted ? (
+                  <div className="py-8 text-center">
+                    <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle size={32} className="text-green-500" />
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900 mb-1">Thank You!</h4>
+                    <p className="text-sm text-gray-500">Our expert will call you shortly.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-3.5">
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="Your Name *"
+                        className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={form.phone}
+                        onChange={handleChange}
+                        required
+                        placeholder="Phone Number *"
+                        className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="date"
+                        name="date"
+                        value={form.date}
+                        onChange={handleChange}
+                        className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
+                      />
+                    </div>
+                    <div>
+                      <select
+                        name="persons"
+                        value={form.persons}
+                        onChange={handleChange}
+                        className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition bg-white"
+                      >
+                        <option value="">Number of Persons</option>
+                        <option value="2">2 Persons</option>
+                        <option value="4">4 Persons</option>
+                        <option value="6">6 Persons</option>
+                        <option value="12">12+ Persons</option>
+                      </select>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full cursor-pointer rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/30 transition duration-300 flex items-center justify-center gap-2"
+                    >
+                      <Send size={15} />
+                      Get Free Quote
+                    </button>
+
+                    <p className="text-center text-[11px] text-gray-400 pt-1">
+                      No spam · 100% Free · Expert guidance
+                    </p>
+                  </form>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Bottom curve to blend into page bg */}
-        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 rounded-t-[100%] bg-[#FFF5EE] pointer-events-none" />
+        {/* Bottom curve */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+          <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+            <path d="M0 60L1440 60L1440 20C1440 20 1200 0 720 0C240 0 0 20 0 20L0 60Z" fill="#FFF5EE" />
+          </svg>
+        </div>
       </section>
     </>
   );
