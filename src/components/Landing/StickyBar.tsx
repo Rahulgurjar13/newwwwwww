@@ -1,6 +1,7 @@
 "use client";
-import { Phone, FileText } from "lucide-react";
-import Link from "next/link";
+import { Phone, MessageCircle, FileText } from "lucide-react";
+
+const openForm = () => window.dispatchEvent(new Event("open-lead-popup"));
 
 export default function StickyBar() {
   return (
@@ -12,29 +13,37 @@ export default function StickyBar() {
         </p>
       </div>
 
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex items-center px-3 py-2.5 gap-2">
         {/* Price */}
-        <div>
-          <span className="text-lg font-extrabold text-orange-500">₹2,299</span>
-          <span className="text-xs text-gray-500 block leading-tight">/person onwards</span>
+        <div className="shrink-0">
+          <span className="text-base font-extrabold text-orange-500">₹2,299</span>
+          <span className="text-[10px] text-gray-500 block leading-tight">/person</span>
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-2">
-          <Link
-            href="tel:+917300620809"
-            className="inline-flex items-center gap-1.5 rounded-full bg-green-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-green-700 transition duration-300"
-          >
-            <Phone size={14} />
-            Call Now
-          </Link>
+        <div className="flex-1 grid grid-cols-3 gap-1.5">
           <a
-            href="#enquiry"
-            className="inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2.5 text-xs font-bold text-white hover:bg-orange-600 transition duration-300"
+            href="tel:+917302265809"
+            className="flex items-center justify-center gap-1 rounded-lg bg-green-600 py-2.5 text-[11px] font-bold text-white"
           >
-            <FileText size={14} />
-            Enquire
+            <Phone size={13} />
+            Call
           </a>
+          <a
+            href="https://wa.me/7302265809"
+            target="_blank"
+            className="flex items-center justify-center gap-1 rounded-lg bg-[#25D366] py-2.5 text-[11px] font-bold text-white"
+          >
+            <MessageCircle size={13} />
+            WhatsApp
+          </a>
+          <button
+            onClick={openForm}
+            className="flex items-center justify-center gap-1 rounded-lg bg-orange-500 py-2.5 text-[11px] font-bold text-white cursor-pointer"
+          >
+            <FileText size={13} />
+            Enquire
+          </button>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import { X, Send, CheckCircle, Clock, Shield, Gift } from "lucide-react";
+import { X, Send, CheckCircle, Shield, Star, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function LeadPopup() {
@@ -14,10 +14,19 @@ export default function LeadPopup() {
 
   useEffect(() => {
     const alreadyClosed = sessionStorage.getItem("leadPopupClosed");
-    if (alreadyClosed) return;
+    if (!alreadyClosed) {
+      const timer = setTimeout(() => setShow(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
-    const timer = setTimeout(() => setShow(true), 2500);
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    const openHandler = () => {
+      setSubmitted(false);
+      setShow(true);
+    };
+    window.addEventListener("open-lead-popup", openHandler);
+    return () => window.removeEventListener("open-lead-popup", openHandler);
   }, []);
 
   const handleClose = () => {
@@ -25,7 +34,7 @@ export default function LeadPopup() {
     sessionStorage.setItem("leadPopupClosed", "true");
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -33,9 +42,7 @@ export default function LeadPopup() {
     e.preventDefault();
     console.log("Lead Popup Form:", form);
     setSubmitted(true);
-    setTimeout(() => {
-      handleClose();
-    }, 3000);
+    setTimeout(() => handleClose(), 3000);
   };
 
   if (!show) return null;
@@ -43,113 +50,153 @@ export default function LeadPopup() {
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center px-4">
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={handleClose}
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleClose} />
 
-      {/* Modal */}
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-popup">
+      {/* Modal — matches hero form card */}
+      <div className="relative w-full max-w-[420px] bg-white rounded-2xl border border-gray-400 shadow-2xl overflow-hidden animate-popup">
         {/* Close */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition cursor-pointer"
+          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/40 transition cursor-pointer"
         >
-          <X size={18} className="text-gray-600" />
+          <X size={16} className="text-white" />
         </button>
 
-        {/* Orange header strip */}
-        <div className="bg-gradient-to-r from-[#b3500a] via-[#cf7602] to-[#c45800] px-6 py-5 text-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-yellow-400/90 px-3 py-1 text-xs font-bold text-gray-900 mb-3">
-            <Clock size={12} />
-            Limited Period Offer
-          </div>
-          <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-            Get Your Free Tour Quote
-          </h3>
-          <p className="text-orange-100 text-sm mt-1.5">
-            2 Days Mathura Vrindavan Package — Starting ₹2,299
+        {/* Orange gradient header — same as hero form */}
+        <div className="bg-gradient-to-br from-orange-500 to-orange-600 px-6 py-5">
+          <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2 backdrop-blur-sm">
+            QUICK ENQUIRY
+          </span>
+          <h3 className="text-xl font-bold text-white">Plan Your Braj Tour</h3>
+          <p className="mt-1 text-sm text-orange-100">
+            Share your details — we&apos;ll send the best plan.
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">
+              <Shield size={12} /> Trusted
+            </span>
+            <span className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">
+              <Star size={12} /> 4.9 Rated
+            </span>
+            <span className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white">
+              <Clock size={12} /> Fast Reply
+            </span>
+          </div>
         </div>
 
-        {submitted ? (
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle size={36} className="text-green-500" />
+        {/* Form body */}
+        <div className="p-6">
+          {submitted ? (
+            <div className="py-8 text-center">
+              <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
+                <CheckCircle size={32} className="text-green-500" />
+              </div>
+              <h4 className="text-lg font-bold text-gray-900 mb-1">Enquiry Sent! 🙏</h4>
+              <p className="text-sm text-gray-500">Our expert will call you within 30 minutes.</p>
             </div>
-            <h4 className="text-xl font-bold text-gray-900 mb-2">Thank You! 🙏</h4>
-            <p className="text-gray-600 text-sm">Our travel expert will call you within 30 minutes.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="p-6">
-            {/* Trust badges */}
-            <div className="flex items-center justify-center gap-4 mb-5">
-              {[
-                { icon: Shield, label: "Verified" },
-                { icon: Gift, label: "Best Price" },
-                { icon: Clock, label: "Instant Reply" },
-              ].map((b, i) => (
-                <span key={i} className="flex items-center gap-1 text-xs text-gray-500">
-                  <b.icon size={12} className="text-orange-500" />
-                  {b.label}
-                </span>
-              ))}
-            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name */}
+              <div className="relative">
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  placeholder=" "
+                  className="peer w-full rounded-xl border border-gray-300 px-4 pt-5 pb-2
+                  text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-200"
+                />
+                {!form.name && (
+                  <label className="absolute left-4 top-3 text-gray-500 text-sm
+                  transition-all duration-200
+                  peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm
+                  peer-focus:top-1 peer-focus:text-xs peer-focus:text-orange-600 pointer-events-none">
+                    Full Name *
+                  </label>
+                )}
+              </div>
 
-            <div className="space-y-3.5">
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                placeholder="Your Name *"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                required
-                placeholder="Phone Number *"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
-              />
-              <input
-                type="date"
-                name="date"
-                value={form.date}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition"
-              />
-              <select
-                name="persons"
-                value={form.persons}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition bg-white"
+              {/* Phone with +91 */}
+              <div className="flex gap-2">
+                <div className="w-16 border border-gray-300 rounded-xl flex items-center justify-center text-sm text-gray-600 shrink-0">
+                  +91
+                </div>
+                <div className="relative flex-1">
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    required
+                    placeholder=" "
+                    className="peer w-full rounded-xl border border-gray-300 px-4 pt-5 pb-2
+                    text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-200"
+                  />
+                  {!form.phone && (
+                    <label className="absolute left-4 top-3 text-gray-500 text-sm
+                    transition-all duration-200
+                    peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm
+                    peer-focus:top-1 peer-focus:text-xs peer-focus:text-orange-600 pointer-events-none">
+                      Phone Number *
+                    </label>
+                  )}
+                </div>
+              </div>
+
+              {/* Travel Date */}
+              <div className="relative">
+                <input
+                  type="date"
+                  name="date"
+                  value={form.date}
+                  onChange={handleChange}
+                  className="peer w-full rounded-xl border border-gray-300 px-4 pt-5 pb-2
+                  text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-200"
+                />
+                <label className="absolute left-3 top-1 text-xs text-gray-500
+                peer-focus:text-orange-600 pointer-events-none">
+                  Travel Date
+                </label>
+              </div>
+
+              {/* Number of Travellers */}
+              <div className="relative">
+                <input
+                  type="text"
+                  name="persons"
+                  value={form.persons}
+                  onChange={handleChange}
+                  placeholder=" "
+                  className="peer w-full rounded-xl border border-gray-300 px-4 pt-5 pb-2
+                  text-sm outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-200"
+                />
+                {!form.persons && (
+                  <label className="absolute left-4 top-3 text-gray-500 text-sm
+                  transition-all duration-200
+                  peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm
+                  peer-focus:top-1 peer-focus:text-xs peer-focus:text-orange-600 pointer-events-none">
+                    Number of Travellers
+                  </label>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-orange-500 hover:bg-orange-600 cursor-pointer
+                text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2"
               >
-                <option value="">Number of Persons</option>
-                <option value="2">2 Adults</option>
-                <option value="4">4 Adults</option>
-                <option value="6">6 Adults</option>
-                <option value="12">12 Adults</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+                <Send size={15} />
+                Send Enquiry
+              </button>
 
-            <button
-              type="submit"
-              className="mt-5 w-full cursor-pointer rounded-full bg-orange-500 px-6 py-3.5 text-base font-bold text-white shadow-lg hover:bg-orange-600 hover:shadow-xl transition duration-300 flex items-center justify-center gap-2 pulse-orange"
-            >
-              <Send size={16} />
-              Get Free Quote Now
-            </button>
-
-            <p className="text-center text-xs text-gray-400 mt-3">
-              ✅ No spam · We reply within 30 minutes
-            </p>
-          </form>
-        )}
+              <p className="text-center text-xs text-gray-400">
+                By submitting, you agree to be contacted via call or WhatsApp.
+              </p>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );

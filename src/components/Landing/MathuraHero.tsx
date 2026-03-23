@@ -78,13 +78,13 @@ export default function MathuraHero() {
               <span className="block sm:inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-lg font-extrabold text-white shadow-lg shadow-orange-500/30 text-center">
                 Starting ₹1,499/person
               </span>
-              <Link
-                href="tel:+917300620809"
-                className="flex items-center justify-center gap-2 rounded-full bg-white/10 border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20 transition duration-300"
+              <button
+                onClick={() => window.dispatchEvent(new Event("open-lead-popup"))}
+                className="flex items-center justify-center gap-2 rounded-full bg-white/10 border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20 transition duration-300 cursor-pointer"
               >
                 <Phone size={15} className="text-green-400" />
                 Call Now
-              </Link>
+              </button>
             </div>
 
             {/* Trust micro */}

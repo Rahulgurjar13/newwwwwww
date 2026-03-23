@@ -59,21 +59,7 @@ export const metadata: Metadata = {
   },
 };
 
-/* ─────────────────── CTA Break ─────────────────── */
-
-function CtaBreak({ text, buttonText }: { text: string; buttonText: string }) {
-  return (
-    <div className="bg-gradient-to-r from-orange-500 to-orange-600 py-8 px-5 text-center">
-      <p className="text-white font-bold text-lg sm:text-xl mb-4">{text}</p>
-      <a
-        href="#enquiry"
-        className="inline-block rounded-full bg-white text-orange-600 font-bold px-8 py-3 shadow-lg hover:shadow-xl hover:scale-105 transition duration-300"
-      >
-        {buttonText}
-      </a>
-    </div>
-  );
-}
+import CtaBreak from "@/components/Landing/CtaBreak";
 
 /* ─────────────────── JSON-LD Schemas ─────────────────── */
 
