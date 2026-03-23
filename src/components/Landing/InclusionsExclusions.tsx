@@ -55,17 +55,17 @@ export default function InclusionsExclusions() {
           </div>
 
           {/* Exclusions */}
-          <div className="bg-white rounded-2xl shadow-md border border-red-100 overflow-hidden">
-            <div className="bg-red-50 px-6 py-4 border-b border-red-100">
-              <h3 className="text-lg font-bold text-red-700 flex items-center gap-2">
-                <XCircle size={20} className="text-red-500" />
+          <div className="bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden">
+            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-bold text-gray-700 flex items-center gap-2">
+                <XCircle size={20} className="text-gray-500" />
                 Not Included ❌
               </h3>
             </div>
             <ul className="p-6 space-y-4">
               {exclusions.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <XCircle size={18} className="text-red-400 shrink-0 mt-0.5" />
+                  <XCircle size={18} className="text-gray-400 shrink-0 mt-0.5" />
                   <span className="text-sm sm:text-base text-gray-700">{item}</span>
                 </li>
               ))}

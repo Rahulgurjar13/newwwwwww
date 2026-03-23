@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const GlobalQuickEnquiry = dynamic(
   () => import("@/components/Home/GlobalWrapQuickEnquiry"),
@@ -18,8 +19,11 @@ const ChatbotWidget = dynamic(
   { ssr: false }
 );
 
+const HIDDEN_PATHS = ["/2-days-mathura-vrindavan-tour"];
+
 export default function GlobalWidgets() {
   const [show, setShow] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), 500);
@@ -27,6 +31,8 @@ export default function GlobalWidgets() {
   }, []);
 
   if (!show) return null;
+  if (HIDDEN_PATHS.includes(pathname)) return null;
+
   return (
     <>
       <GlobalQuickEnquiry />

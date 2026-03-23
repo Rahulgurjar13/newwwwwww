@@ -74,13 +74,13 @@ export default function MathuraHero() {
             </div>
 
             {/* Price + CTA row */}
-            <div className="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-              <span className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-lg font-extrabold text-white shadow-lg shadow-orange-500/30">
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 justify-center lg:justify-start w-full sm:w-auto">
+              <span className="block sm:inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3 text-lg font-extrabold text-white shadow-lg shadow-orange-500/30 text-center">
                 Starting ₹1,499/person
               </span>
               <Link
                 href="tel:+917300620809"
-                className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20 transition duration-300"
+                className="flex items-center justify-center gap-2 rounded-full bg-white/10 border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20 transition duration-300"
               >
                 <Phone size={15} className="text-green-400" />
                 Call Now
@@ -88,18 +88,18 @@ export default function MathuraHero() {
             </div>
 
             {/* Trust micro */}
-            <div className="mt-5 flex flex-wrap items-center gap-5 text-xs text-gray-400 justify-center lg:justify-start">
-              <span className="flex items-center gap-1.5">
+            <div className="mt-6 grid grid-cols-3 sm:flex sm:flex-wrap sm:items-center gap-3 sm:gap-5 text-xs text-gray-400 text-center sm:text-left justify-center lg:justify-start">
+              <span className="flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5">
                 <Shield size={13} className="text-orange-400" />
                 Free Cancellation
               </span>
-              <span className="flex items-center gap-1.5">
+              <span className="flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5">
                 <Users size={13} className="text-orange-400" />
                 24/7 Support
               </span>
-              <span className="flex items-center gap-1.5">
+              <span className="flex flex-col sm:flex-row items-center gap-1 sm:gap-1.5">
                 <Star size={13} className="text-orange-400" />
-                VIP Darshan Included
+                VIP Darshan
               </span>
             </div>
           </div>
